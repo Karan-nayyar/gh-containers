@@ -7,6 +7,7 @@ const dbPassword = process.env.MONGODB_PASSWORD;
 const dbName = process.env.MONGODB_DB_NAME;
 
 const uri = `${connectionProtocol}://${dbUser}:${dbPassword}@${clusterAddress}/?retryWrites=true&w=majority`;
+console.log(`MongoDB URI: ${connectionProtocol}://<user>:<password>@${clusterAddress}`);
 const client = new MongoClient(uri);
 
 console.log('Trying to connect to db');
@@ -16,6 +17,7 @@ try {
   await client.db(dbName).command({ ping: 1 });
   console.log('Connected successfully to server');
 } catch (error) {
+  console.error('MongoDB Connection Error:', error);
   console.log('Connection failed.');
   await client.close();
   console.log('Connection closed.');
